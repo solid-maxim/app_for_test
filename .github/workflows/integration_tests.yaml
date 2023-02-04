@@ -86,5 +86,4 @@ jobs:
       - name: Enable Flutter for Web
         run: flutter config --enable-web
       - name: Run integration tests
-        run: chromedriver --port=4444 &
-        run: flutter drive --driver=integration_test/web/integration_test.dart --target=integration_test/web/app_test.dart -d web-server --browser-name=chrome --web-port=8080
+        run: chromedriver --port=4444 & flutter drive --driver=integration_test/web/integration_test.dart --target=integration_test/web/app_test.dart -d web-server --browser-name=chrome --web-port=8080
