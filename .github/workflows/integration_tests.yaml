@@ -33,7 +33,7 @@ jobs:
       - name: Install Flutter dependencies
         run: flutter pub get
       - name: Run integration tests
-        run: flutter test integration_test --verbose
+        run: flutter test integration_test/mobile --verbose
 
   android:
     runs-on: macOS-latest
@@ -43,7 +43,7 @@ jobs:
           - 29
           - 23
       # if one of the jobs in the matrix expansion fails, the rest of the jobs will be cancelled
-      fail-fast: true
+      # fail-fast: true
     steps:
       - name: "Checkout repo"
         uses: actions/checkout@v3
@@ -60,4 +60,4 @@ jobs:
           api-level: ${{ matrix.api-level }}
           arch: x86_64
           profile: Nexus 6
-          script: flutter test integration_test --verbose
+          script: flutter test integration_test/mobile --verbose
