@@ -76,8 +76,6 @@ jobs:
         uses: browser-actions/setup-chrome@v1
       - name: Setup ChromeDriver
         uses: nanasess/setup-chromedriver@v1
-      - name: Start chromedriver
-        run: chromedriver --port=4444
       - name: Setup Flutter SDK
         uses: subosito/flutter-action@v2
         with:
@@ -88,4 +86,5 @@ jobs:
       - name: Enable Flutter for Web
         run: flutter config --enable-web
       - name: Run integration tests
+        run: chromedriver --port=4444 &
         run: flutter drive --driver=integration_test/web/integration_test.dart --target=integration_test/web/app_test.dart -d web-server --browser-name=chrome --web-port=8080
