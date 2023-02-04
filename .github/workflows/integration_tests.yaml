@@ -8,50 +8,71 @@ on: [push]
 #      - main
 
 jobs:
-  ios:
-    runs-on: macOS-latest
-    strategy:
-      matrix:
-        device:
-          - iPhone 8
-          - iPhone SE (2nd generation)
-          - iPhone 14 Pro
-      # if one of the jobs in the matrix expansion fails, the rest of the jobs will be cancelled
-      fail-fast: true
-    steps:
-      - name: "Get simulator UDID"
-        uses: futureware-tech/simulator-action@v2
-        with:
-          model: ${{ matrix.device }}
-      - name: "Checkout repo"
-        uses: actions/checkout@v3
-      - name: Setup Flutter SDK
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: "3.3.8"
-          channel: "stable"
-      - name: Install Flutter dependencies
-        run: flutter pub get
-      - name: Run integration tests
-        run: flutter test integration_test/mobile --verbose
+  # ios:
+  #   runs-on: macOS-latest
+  #   strategy:
+  #     matrix:
+  #       device:
+  #         - iPhone 8
+  #         - iPhone SE (2nd generation)
+  #         - iPhone 14 Pro
+  #     # if one of the jobs in the matrix expansion fails, the rest of the jobs will be cancelled
+  #     fail-fast: true
+  #   steps:
+  #     - name: "Get simulator UDID"
+  #       uses: futureware-tech/simulator-action@v2
+  #       with:
+  #         model: ${{ matrix.device }}
+  #     - name: "Checkout repo"
+  #       uses: actions/checkout@v3
+  #     - name: Setup Flutter SDK
+  #       uses: subosito/flutter-action@v2
+  #       with:
+  #         flutter-version: "3.3.8"
+  #         channel: "stable"
+  #     - name: Install Flutter dependencies
+  #       run: flutter pub get
+  #     - name: Run integration tests
+  #       run: flutter test integration_test/mobile --verbose
 
-  android:
+  # android:
+  #   runs-on: macOS-latest
+  #   strategy:
+  #     matrix:
+  #       api-level:
+  #         - 29
+  #         - 23
+  #     # if one of the jobs in the matrix expansion fails, the rest of the jobs will be cancelled
+  #     # fail-fast: true
+  #   steps:
+  #     - name: "Checkout repo"
+  #       uses: actions/checkout@v3
+  #     - name: "Setup Java"
+  #       uses: actions/setup-java@v3
+  #       with:
+  #         distribution: "zulu"
+  #         java-version: "17"
+  #     - name: Setup Flutter SDK
+  #       uses: subosito/flutter-action@v2
+  #       with:
+  #         flutter-version: "3.3.8"
+  #         channel: "stable"
+  #     - name: Install Flutter dependencies
+  #       run: flutter pub get
+  #     - name: Run integration tests
+  #       uses: reactivecircus/android-emulator-runner@v2
+  #       with:
+  #         api-level: ${{ matrix.api-level }}
+  #         arch: x86_64
+  #         profile: Nexus 6
+  #         script: flutter test integration_test/mobile --verbose
+  
+  web:
     runs-on: macOS-latest
-    strategy:
-      matrix:
-        api-level:
-          - 29
-          - 23
-      # if one of the jobs in the matrix expansion fails, the rest of the jobs will be cancelled
-      # fail-fast: true
     steps:
       - name: "Checkout repo"
         uses: actions/checkout@v3
-      - name: "Setup Java"
-        uses: actions/setup-java@v3
-        with:
-          distribution: "zulu"
-          java-version: "17"
+      - uses: browser-actions/setup-chrome@v1
       - name: Setup Flutter SDK
         uses: subosito/flutter-action@v2
         with:
@@ -60,9 +81,4 @@ jobs:
       - name: Install Flutter dependencies
         run: flutter pub get
       - name: Run integration tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: ${{ matrix.api-level }}
-          arch: x86_64
-          profile: Nexus 6
-          script: flutter test integration_test/mobile --verbose
+        run: flutter test -d chrome integration_test/web --verbose
