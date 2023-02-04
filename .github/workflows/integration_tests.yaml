@@ -12,6 +12,8 @@ jobs:
     strategy:
       matrix:
         device:
+          - iPhone 8
+          - iPhone SE (2nd generation)
           - iPhone 14 Pro
       # if one of the jobs in the matrix expansion fails, the rest of the jobs will be cancelled
       fail-fast: true
@@ -20,7 +22,7 @@ jobs:
       - name: "Get simulator UDID"
         uses: futureware-tech/simulator-action@v2
         with:
-          model: "iPhone 14 Pro"
+          model: ${{ matrix.device }}
       - name: "Checkout repo"
         uses: actions/checkout@v3
       - name: Setup Flutter SDK
