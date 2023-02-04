@@ -80,5 +80,7 @@ jobs:
           channel: "stable"
       - name: Install Flutter dependencies
         run: flutter pub get
+      - name: Enable Flutter for Web
+        run: flutter config --enable-web
       - name: Run integration tests
         run: flutter test -d chrome integration_test/web --verbose
