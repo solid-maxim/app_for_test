@@ -14,8 +14,7 @@ void main() {
       // Verify the counter starts at 0.
       expect(find.text('0'), findsOneWidget);
 
-
-      await Future.delayed(Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 5));
 
       // Finds the floating action button to tap on.
       final Finder fab = find.byTooltip('Increment');
@@ -23,7 +22,7 @@ void main() {
       // Emulate a tap on the floating action button.
       await tester.tap(fab);
 
-      await Future.delayed(Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 5));
 
       // Trigger a frame.
       await tester.pumpAndSettle();
