@@ -2,10 +2,10 @@
 name: integration_tests
 
 # Run the worklow only on the pull request to the main branch
-on:
-  pull_request:
-    branches:
-      - main
+on: [push]
+#  pull_request:
+#    branches:
+#      - main
 
 jobs:
   ios:
@@ -47,6 +47,11 @@ jobs:
     steps:
       - name: "Checkout repo"
         uses: actions/checkout@v3
+      - name: "Setup Java"
+        uses: actions/setup-java@v3
+        with:
+          distribution: "zulu"
+          java-version: "17"
       - name: Setup Flutter SDK
         uses: subosito/flutter-action@v2
         with:
