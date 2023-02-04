@@ -1,0 +1,34 @@
+# name of the workflow
+name: integration_tests
+
+# Run the worklow only on the pull request to the main branch
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ios:
+    strategy:
+      matrix:
+        device:
+          - iPhone 14 Pro Simulator (16.1)
+      # if one of the jobs in the matrix expansion fails, the rest of the jobs will be cancelled
+      fail-fast: true
+    runs-on: macOS-latest
+    steps:
+      - name: "Get simulator UDID"
+        uses: futureware-tech/simulator-action@v2
+        with:
+          model: "iPhone 14 Pro Simulator (16.1)"
+      - name: "Checkout repo"
+        uses: actions/checkout@v3
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.3.8"
+          channel: "stable"
+      - name: Install Flutter dependencies
+        run: flutter pub get
+      - name: Run integration tests
+        run: flutter test integration_test --verbose
