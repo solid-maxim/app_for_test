@@ -76,6 +76,7 @@ jobs:
         uses: browser-actions/setup-chrome@v1
       - name: Setup ChromeDriver
         uses: nanasess/setup-chromedriver@v1
+      - name: Start chromedriver
         run: chromedriver --port=4444
       - name: Setup Flutter SDK
         uses: subosito/flutter-action@v2
