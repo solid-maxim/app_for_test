@@ -1,14 +1,12 @@
-# name of the workflow
-name: integration_tests
+name: run_tests
 
-# Run the worklow only on the pull request to the main branch
 on: [push]
-#  pull_request:
-#    branches:
-#      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  general_tests:
+  general:
     runs-on: macOS-latest
     steps:
       - name: "Checkout repo"
@@ -20,9 +18,12 @@ jobs:
           channel: "stable"
       - name: Install Flutter dependencies
         run: flutter pub get
+      - name: Analyze
+        run: flutter analyze
       - name: Run tests
         run: flutter test
-  ios:
+
+  integration_ios:
     runs-on: macOS-latest
     strategy:
       matrix:
@@ -49,7 +50,7 @@ jobs:
       - name: Run integration tests
         run: flutter test integration_test/mobile --verbose
 
-  android:
+  integration_android:
     runs-on: macOS-latest
     strategy:
       matrix:
@@ -57,7 +58,7 @@ jobs:
           - 29
           - 23
       # if one of the jobs in the matrix expansion fails, the rest of the jobs will be cancelled
-      # fail-fast: true
+      fail-fast: true
     steps:
       - name: "Checkout repo"
         uses: actions/checkout@v3
@@ -81,7 +82,7 @@ jobs:
           profile: Nexus 6
           script: flutter test integration_test/mobile --verbose
   
-  web:
+  integration_web:
     runs-on: macOS-latest
     steps:
       - name: "Checkout repo"
