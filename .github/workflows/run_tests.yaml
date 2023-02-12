@@ -1,15 +1,13 @@
 name: run_tests
 
 on:
-  # pull_request_review:
   pull_request:
     branches:
       - main
-    # types: [submitted]
 
 jobs:
   tests:
-    if: github.event.review.state == 'approved'
+    # if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -35,7 +33,7 @@ jobs:
         run: flutter test
 
   integration_ios:
-    if: github.event.review.state == 'approved'
+    # if: github.event.review.state == 'approved'
     runs-on: macOS-latest
     defaults:
       run:
@@ -66,7 +64,7 @@ jobs:
         run: flutter test integration_test/mobile --verbose
 
   integration_android:
-    if: github.event.review.state == 'approved'
+    # if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -102,7 +100,7 @@ jobs:
           script: flutter test integration_test/mobile --verbose
 
   integration_web:
-    if: github.event.review.state == 'approved'
+    # if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     defaults:
       run:
