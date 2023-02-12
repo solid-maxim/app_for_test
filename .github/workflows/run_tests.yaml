@@ -37,7 +37,7 @@ jobs:
     runs-on: macOS-latest
     defaults:
       run:
-        working-directory: eggy_app
+        working-directory: app_eggy
     strategy:
       matrix:
         device:
@@ -75,7 +75,7 @@ jobs:
       fail-fast: true
     defaults:
       run:
-        working-directory: eggy_app
+        working-directory: app_eggy
     steps:
       - name: 'Checkout repo'
         uses: actions/checkout@v3
@@ -104,7 +104,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: eggy_app
+        working-directory: app_eggy
     steps:
       - name: 'Checkout repo'
         uses: actions/checkout@v3
