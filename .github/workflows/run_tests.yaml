@@ -1,10 +1,11 @@
 name: run_tests
 
 on:
-  pull_request_review:
+  # pull_request_review:
+  pull_request:
     branches:
       - main
-    types: [submitted]
+    # types: [submitted]
 
 jobs:
   tests:
@@ -36,6 +37,9 @@ jobs:
   integration_ios:
     if: github.event.review.state == 'approved'
     runs-on: macOS-latest
+    defaults:
+      run:
+        working-directory: ./eggy_app
     strategy:
       matrix:
         device:
@@ -71,6 +75,9 @@ jobs:
           # - 23
       # if one of the jobs in the matrix expansion fails, the rest of the jobs will be cancelled
       fail-fast: true
+    defaults:
+      run:
+        working-directory: ./eggy_app
     steps:
       - name: 'Checkout repo'
         uses: actions/checkout@v3
@@ -97,6 +104,9 @@ jobs:
   integration_web:
     if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./eggy_app
     steps:
       - name: 'Checkout repo'
         uses: actions/checkout@v3
